@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بازی سنگ، کاغذ، قیچی</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            direction: rtl;
+        }
+        h1 {
+            color: #333;
+        }
+        .choices {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .choice {
+            background-color: #fff;
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .choice:hover {
+            transform: scale(1.1);
+            background-color: #ddd;
+        }
+        #result {
+            font-size: 24px;
+            margin-top: 20px;
+            color: #333;
+        }
+        #score {
+            font-size: 18px;
+            margin-top: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>بازی سنگ، کاغذ، قیچی</h1>
+    <div class="choices">
+        <button class="choice" onclick="playGame('سنگ')">سنگ</button>
+        <button class="choice" onclick="playGame('کاغذ')">کاغذ</button>
+        <button class="choice" onclick="playGame('قیچی')">قیچی</button>
+    </div>
+    <div id="result"></div>
+    <div id="score">امتیاز: شما ۰ - کامپیوتر ۰</div>
+
+    <script>
+        const choices = ['سنگ', 'کاغذ', 'قیچی'];
+        let playerScore = 0;
+        let computerScore = 0;
+
+        function getComputerChoice() {
+            const randomIndex = Math.floor(Math.random() * 3);
+            return choices[randomIndex];
+        }
+
+        function determineWinner(playerChoice, computerChoice) {
+            if (playerChoice === computerChoice) {
+                return 'مساوی!';
+            }
+            if (
+                (playerChoice === 'سنگ' && computerChoice === 'قیچی') ||
+                (playerChoice === 'کاغذ' && computerChoice === 'سنگ') ||
+                (playerChoice === 'قیچی' && computerChoice === 'کاغذ')
+            ) {
+                playerScore++;
+                return 'شما بردید!';
+            }
+            computerScore++;
+            return 'کامپیوتر برد!';
+        }
+
+        function playGame(playerChoice) {
+            const computerChoice = getComputerChoice();
+            const result = determineWinner(playerChoice, computerChoice);
+            document.getElementById('result').innerText = `شما: ${playerChoice} | کامپیوتر: ${computerChoice} | نتیجه: ${result}`;
+            document.getElementById('score').innerText = `امتیاز: شما ${playerScore} - کامپیوتر ${computerScore}`;
+        }
+    </script>
+</body>
+</html>
